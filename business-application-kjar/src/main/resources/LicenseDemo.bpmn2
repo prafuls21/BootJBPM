@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<definitions id="Definition"
+             targetNamespace="http://www.jboss.org/drools"
+             typeLanguage="http://www.java.com/javaTypes"
+             expressionLanguage="http://www.mvel.org/2.0"
+             xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd"
+             xmlns:g="http://www.jboss.org/drools/flow/gpd"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:tns="http://www.jboss.org/drools">
+
+  <itemDefinition id="ItemDefinition_1" structureRef="java.lang.Boolean" />
+  <itemDefinition id="ItemDefinition_645" structureRef="java.lang.Integer" />
+  <itemDefinition id="ItemDefinition_1377" structureRef="java.lang.String" />
+  <process processType="Private" isExecutable="true" id="com.mastertheboss.LicenseDemo" name="LicenseDemo" tns:packageName="defaultPackage" >
+
+    <!-- process variables -->
+    <property id="age" itemSubjectRef="ItemDefinition_645"/>
+
+    <!-- nodes -->
+    <startEvent id="_1"  isInterrupting="true">
+    </startEvent>
+    <userTask id="_4" name="CheckLicense" >
+      <extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("Enter the risk level");</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>System.out.println("Thanks for the details");</tns:script>
+        </tns:onExit-script>
+      </extensionElements>
+      <ioSpecification>
+        <dataInput id="_4_ageInput" name="age" />
+        <dataInput id="_4_LocaleInput" name="Locale" />
+        <dataInput id="_4_TaskNameInput" name="TaskName" />
+        <dataInput id="_4_NodeNameInput" name="NodeName" />
+        <dataInput id="_4_PriorityInput" name="Priority" />
+        <dataInput id="_4_SkippableInput" name="Skippable" />
+        <dataOutput id="_4_ageOutput" name="age" />
+        <inputSet>
+          <dataInputRefs>_4_ageInput</dataInputRefs>
+          <dataInputRefs>_4_LocaleInput</dataInputRefs>
+          <dataInputRefs>_4_TaskNameInput</dataInputRefs>
+          <dataInputRefs>_4_NodeNameInput</dataInputRefs>
+          <dataInputRefs>_4_PriorityInput</dataInputRefs>
+          <dataInputRefs>_4_SkippableInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_4_ageOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <sourceRef>age</sourceRef>
+        <targetRef>_4_ageInput</targetRef>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_4_LocaleInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">en-UK</from>
+          <to xsi:type="tFormalExpression">_4_LocaleInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_4_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">Task Name</from>
+          <to xsi:type="tFormalExpression">_4_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_4_NodeNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">CheckLicense</from>
+          <to xsi:type="tFormalExpression">_4_NodeNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_4_PriorityInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">1</from>
+          <to xsi:type="tFormalExpression">_4_PriorityInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_4_SkippableInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">true</from>
+          <to xsi:type="tFormalExpression">_4_SkippableInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_4_ageOutput</sourceRef>
+        <targetRef>age</targetRef>
+      </dataOutputAssociation>
+      <potentialOwner>
+        <resourceAssignmentExpression>
+          <formalExpression>john</formalExpression>
+        </resourceAssignmentExpression>
+      </potentialOwner>
+    </userTask>
+    <scriptTask id="ScriptTask_2" name="rRiskRanking" scriptFormat="http://www.java.com/java" >
+      <script>System.out.println("Welcome to Risk Ranking check");</script>
+    </scriptTask>
+    <endEvent id="EndEvent_3" name="End Event 3" />
+    <scriptTask id="ScriptTask_3" name="Rejected" scriptFormat="http://www.java.com/java" >
+      <script>System.out.println("Risk Ranking Details Rejected");</script>
+    </scriptTask>
+    <scriptTask id="ScriptTask_1" name="Pass" scriptFormat="http://www.java.com/java" >
+      <script>System.out.println("Risk Ranking Details Accepted");</script>
+    </scriptTask>
+    <endEvent id="EndEvent_1" name="End Event 1" />
+    <exclusiveGateway id="ExclusiveGateway_1" name="Exclusive Gateway 1" gatewayDirection="Diverging" >
+    </exclusiveGateway>
+
+    <!-- connections -->
+    <sequenceFlow id="ScriptTask_2-_4" sourceRef="ScriptTask_2" targetRef="_4" />
+    <sequenceFlow id="_1-ScriptTask_2" sourceRef="_1" targetRef="ScriptTask_2" />
+    <sequenceFlow id="ScriptTask_3-EndEvent_3" sourceRef="ScriptTask_3" targetRef="EndEvent_3" />
+    <sequenceFlow id="ExclusiveGateway_1-ScriptTask_3" sourceRef="ExclusiveGateway_1" targetRef="ScriptTask_3" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" >age  &lt; 18</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="ExclusiveGateway_1-ScriptTask_1" sourceRef="ExclusiveGateway_1" targetRef="ScriptTask_1" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" >age &gt;= 18</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="ScriptTask_1-EndEvent_1" sourceRef="ScriptTask_1" targetRef="EndEvent_1" />
+    <sequenceFlow id="_4-ExclusiveGateway_1" sourceRef="_4" targetRef="ExclusiveGateway_1" />
+
+  </process>
+
+  <bpmndi:BPMNDiagram>
+    <bpmndi:BPMNPlane bpmnElement="com.mastertheboss.LicenseDemo" >
+      <bpmndi:BPMNShape bpmnElement="_1" >
+        <dc:Bounds x="134" y="104" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_4" >
+        <dc:Bounds x="310" y="16" width="100" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ScriptTask_2" >
+        <dc:Bounds x="140" y="15" width="110" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EndEvent_3" >
+        <dc:Bounds x="596" y="211" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ScriptTask_3" >
+        <dc:Bounds x="440" y="210" width="110" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ScriptTask_1" >
+        <dc:Bounds x="450" y="22" width="110" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EndEvent_1" >
+        <dc:Bounds x="596" y="23" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ExclusiveGateway_1" >
+        <dc:Bounds x="335" y="129" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="ScriptTask_2-_4" >
+        <di:waypoint x="195" y="40" />
+        <di:waypoint x="280" y="40" />
+        <di:waypoint x="310" y="40" />
+        <di:waypoint x="360" y="40" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_1-ScriptTask_2" >
+        <di:waypoint x="158" y="128" />
+        <di:waypoint x="195" y="128" />
+        <di:waypoint x="195" y="65" />
+        <di:waypoint x="195" y="40" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="ScriptTask_3-EndEvent_3" >
+        <di:waypoint x="495" y="235" />
+        <di:waypoint x="576" y="235" />
+        <di:waypoint x="602" y="235" />
+        <di:waypoint x="620" y="235" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="ExclusiveGateway_1-ScriptTask_3" >
+        <di:waypoint x="359" y="153" />
+        <di:waypoint x="360" y="235" />
+        <di:waypoint x="440" y="235" />
+        <di:waypoint x="495" y="235" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="ExclusiveGateway_1-ScriptTask_1" >
+        <di:waypoint x="359" y="153" />
+        <di:waypoint x="417" y="154" />
+        <di:waypoint x="417" y="47" />
+        <di:waypoint x="450" y="47" />
+        <di:waypoint x="505" y="47" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="ScriptTask_1-EndEvent_1" >
+        <di:waypoint x="505" y="47" />
+        <di:waypoint x="581" y="47" />
+        <di:waypoint x="602" y="47" />
+        <di:waypoint x="620" y="47" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_4-ExclusiveGateway_1" >
+        <di:waypoint x="360" y="40" />
+        <di:waypoint x="360" y="96" />
+        <di:waypoint x="360" y="129" />
+        <di:waypoint x="359" y="153" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+
+</definitions>
